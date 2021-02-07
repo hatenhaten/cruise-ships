@@ -1,31 +1,47 @@
 const Ship = require('../src/Ship');
 const Port = require('../src/Port');
+const Itinerary = require('../src/Itinerary');
 
 describe('Ship', () => {
-    let ship, port, calais;
+
+    let ship, dover, calais, itinerary;
     beforeEach(() => {
-        port = new Port('Dover');
-        ship = new Ship(port);
-        port2 = new Port('Calais')
+        dover = new Port('Dover');
+        calais = new Port('Calais');
+        itinerary = new Itinerary([dover, calais]);
+        ship = new Ship(itinerary);
     });
 
     it('can be instantiated', () => {
-        expect(new Ship()).toBeInstanceOf(Object);
+        expect(new Ship(itinerary)).toBeInstanceOf(Object);
+    });
+
+    it('has a starting port', () => {
+        expect(ship.currentPort).toBe(dover);
     });
 
     it('has a current port', () => {
-        expect(ship.currentPort).toBe(port);
+        expect(ship.currentPort).toBe(dover);
     });
 
     it('can set sail', () => {
         ship.setSail();
 
+        expect(ship.previousPort).toBe(dover);
         expect(ship.setSail()).toBeFalsy();
     });
 
     it('can dock at a different port', () => {
-        ship.dock(port2);
+        ship.setSail();
+        ship.dock();
 
-        expect(ship.currentPort).toBe(port2);
+        expect(ship.currentPort).toBe(calais);
+    });
+
+    it('can\'t sail further than its itinerary', () => {
+        ship.setSail();
+        ship.dock();
+
+        expect(() => ship.setSail()).toThrowError('End of itinerary reached');
     });
 });

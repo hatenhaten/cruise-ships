@@ -1,9 +1,9 @@
 const Port = require('../src/Port');
 
 describe('Port', () => {
-    let port;
+    let dover;
     beforeEach(() => {
-        port = new Port('Dover');
+        dover = new Port('Dover');
     });
 
     it('can be instantiated', () => {
@@ -11,6 +11,6 @@ describe('Port', () => {
     });
 
     it('has a name', () => {
-        expect(port.name).toBe('Dover');
+        expect(dover.name).toBe('Dover');
     });
 });
