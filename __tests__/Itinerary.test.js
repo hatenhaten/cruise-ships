@@ -2,10 +2,12 @@ const Itinerary = require('../src/Itinerary');
 const Port = require('../src/Port');
 
 describe('Iinerary', () => {
+
     let itinerary, dover, calais;
+    
     beforeEach(() => {
-        dover = new Port('Dover');
-        calais = new Port('Calais');
+        dover = jest.fn();
+        calais = jest.fn();
         itinerary = new Itinerary([dover, calais]);
     });
 
